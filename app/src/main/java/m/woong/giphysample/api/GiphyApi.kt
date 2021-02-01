@@ -1,6 +1,6 @@
 package m.woong.giphysample.api
 
-import m.woong.giphysample.data.remote.model.RemoteTrendingGiphyResponse
+import m.woong.giphysample.data.source.remote.model.RemoteTrendingGiphyResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
