@@ -4,7 +4,7 @@ import okhttp3.ResponseBody
 
 sealed class ResWrapper<out T> {
     data class Success<out T>(val value: T) : ResWrapper<T>()
-    data class Failure(
+    data class Error(
         val isNetworkError: Boolean,
         val errorCode: Int?,
         val errorBody: ResponseBody?
