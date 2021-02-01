@@ -1,4 +1,4 @@
-package m.woong.giphysample.data.remote.model
+package m.woong.giphysample.data.source.remote.model
 import com.google.gson.annotations.SerializedName
 
 

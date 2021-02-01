@@ -1,7 +1,7 @@
-package m.woong.giphysample.data.remote
+package m.woong.giphysample.data.source.remote
 
 import m.woong.giphysample.api.GiphyApi
-import m.woong.giphysample.data.remote.model.RemoteTrendingGiphyResponse
+import m.woong.giphysample.data.source.remote.model.RemoteTrendingGiphyResponse
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
