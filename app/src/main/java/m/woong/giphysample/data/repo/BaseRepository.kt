@@ -14,10 +14,10 @@ abstract class BaseRepository {
             }catch (throwable: Throwable){
                 when(throwable){
                     is HttpException -> {
-                        ResWrapper.Failure(isNetworkError = false, errorCode = throwable.code(), errorBody = throwable.response()?.errorBody())
+                        ResWrapper.Error(isNetworkError = false, errorCode = throwable.code(), errorBody = throwable.response()?.errorBody())
                     }
                     else -> {
-                        ResWrapper.Failure(true, null, null)
+                        ResWrapper.Error(true, null, null)
                     }
                 }
             }
