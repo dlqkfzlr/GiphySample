@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -16,9 +17,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object GiphyModule {
+
     private const val BASE_URL = "https://api.giphy.com/v1/gifs/"
 
-    @Singleton
     @Provides
     fun provideGiphyApi(): GiphyApi {
         return Retrofit.Builder()

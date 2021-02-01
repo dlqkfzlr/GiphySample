@@ -1,12 +1,15 @@
 package m.woong.giphysample.data.repo
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import m.woong.giphysample.data.ResWrapper
-import m.woong.giphysample.data.remote.RemoteDataSourceImpl
-import m.woong.giphysample.data.remote.model.RemoteTrendingGiphyResponse
+import m.woong.giphysample.data.paging.TrendingPagingSource
+import m.woong.giphysample.data.source.remote.RemoteDataSourceImpl
+import m.woong.giphysample.data.source.remote.model.RemoteTrendingGiphyResponse
+import javax.inject.Inject
 
-class GiphyRepositoryImpl(
+class GiphyRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSourceImpl
 ): BaseRepository(), GiphyRepository {
 
@@ -14,7 +17,17 @@ class GiphyRepositoryImpl(
         remoteDataSource.getTrendingGiphy()
     }
 
-    override fun getTrendingGiphyStream(): Flow<PagingData<RemoteTrendingGiphyResponse>> {
-        TODO("Not yet implemented")
+    override fun getTrendingGiphyStream(): Flow<PagingData<RemoteTrendingGiphyResponse.Data>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {TrendingPagingSource(remoteDataSource)}
+        ).flow
+    }
+
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 25
     }
 }
