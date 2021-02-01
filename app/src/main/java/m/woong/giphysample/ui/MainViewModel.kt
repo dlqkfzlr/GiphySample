@@ -1,7 +1,9 @@
-package m.woong.giphysample.ui.main
+package m.woong.giphysample.ui
 
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+     fun getTrendingGif(){
+
+     }
 }
