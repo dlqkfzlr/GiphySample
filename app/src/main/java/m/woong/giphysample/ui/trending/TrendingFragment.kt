@@ -73,14 +73,12 @@ class TrendingFragment : Fragment(), FavoriteToggleListener {
         trendingJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getTrendingGif().collectLatest {
                 adapter.submitData(it)
-                Log.d(TAG, "adapter.itemCount:${adapter.itemCount}")
             }
         }
     }
 
     override fun onToggleFavorite(gif: Gif) {
         gif.isFavorite = !gif.isFavorite
-        Log.d(TAG, "gif:${gif}")
         viewModel.saveFavoriteGif(gif)
     }
 }

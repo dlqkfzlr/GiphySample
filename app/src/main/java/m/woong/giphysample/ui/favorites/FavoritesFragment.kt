@@ -64,7 +64,6 @@ class FavoritesFragment : Fragment() {
         favoriteJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getFavoriteGif().collectLatest {
                 fAdapter.submitData(it)
-                Log.d(TAG, "fAdapter.itemCount:${fAdapter.itemCount}")
             }
         }
     }
