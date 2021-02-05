@@ -1,4 +1,4 @@
-package m.woong.giphysample.ui.trending
+package m.woong.giphysample.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,33 +9,31 @@ import androidx.recyclerview.widget.RecyclerView
 import m.woong.giphysample.R
 import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.GifRvItemBinding
+import m.woong.giphysample.ui.trending.TrendingGifAdapter
 
-class TrendingGifAdapter(
-    private val mListener: FavoriteToggleListener
-): PagingDataAdapter<Gif, TrendingGifAdapter.TrendingViewHolder>(DIFF_CALLBACK) {
+class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteViewHolder>(DIFF_CALLBACK) {
 
-    override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         getItem(position)?.let {
             holder.onBind(it)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val binding = DataBindingUtil.inflate<GifRvItemBinding>(
             LayoutInflater.from(parent.context),
             R.layout.gif_rv_item,
             parent,
             false
         )
-        return TrendingViewHolder(binding)
+        return FavoriteViewHolder(binding)
     }
 
-    inner class TrendingViewHolder(private val binding: GifRvItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+    inner class FavoriteViewHolder(private val binding: GifRvItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun onBind(gif: Gif) {
             with(binding){
                 item = gif
-                listener = mListener
                 executePendingBindings()
             }
         }
@@ -50,8 +48,4 @@ class TrendingGifAdapter(
                 oldItem == newItem
         }
     }
-}
-
-interface FavoriteToggleListener {
-    fun onToggleFavorite(gif: Gif)
 }

@@ -4,13 +4,13 @@ import m.woong.giphysample.data.source.remote.model.RemoteTrendingGiphyResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface GiphyApi {
+interface GiphyService {
 
     @GET(SUB_PATH_TREND)
     suspend fun requestTrendingGiphy(
         @Query("api_key") key: String = API_KEY,
-        @Query("limit") limit: Int = 25,
-        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
         @Query("rating") rating: String = "g",
         @Query("lang") lang: String = "en"
     ): RemoteTrendingGiphyResponse

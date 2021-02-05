@@ -3,5 +3,5 @@ package m.woong.giphysample.data.source.remote
 import m.woong.giphysample.data.source.remote.model.RemoteTrendingGiphyResponse
 
 interface RemoteDataSource {
-    suspend fun getTrendingGiphy(): RemoteTrendingGiphyResponse
+    suspend fun getTrendingGiphy(itemsPerPage: Int, page: Int): RemoteTrendingGiphyResponse
 }

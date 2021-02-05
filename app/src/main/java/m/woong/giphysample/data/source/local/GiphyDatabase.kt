@@ -1,12 +1,24 @@
 package m.woong.giphysample.data.source.local
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import m.woong.giphysample.data.source.local.dao.GifDao
+import m.woong.giphysample.data.source.local.dao.RemoteKeysDao
+import m.woong.giphysample.data.source.local.entity.Gif
+import m.woong.giphysample.data.source.local.entity.RemoteKeys
 
+
+@Database(
+    entities = [Gif::class, RemoteKeys::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class GiphyDatabase : RoomDatabase() {
 
-    abstract fun gifsDao(): GifDao
+    abstract fun gifDao(): GifDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
 

@@ -1,12 +1,11 @@
 package m.woong.giphysample.di
 
 import android.app.Application
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import m.woong.giphysample.api.GiphyApi
+import m.woong.giphysample.api.GiphyService
 import m.woong.giphysample.data.source.local.GiphyDatabase
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -21,7 +20,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGiphyApi(): GiphyApi {
+    fun provideGiphyApi(): GiphyService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(
@@ -29,7 +28,7 @@ object AppModule {
                     .build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(GiphyApi::class.java)
+            .create(GiphyService::class.java)
     }
 
     @Singleton
@@ -38,5 +37,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGifDao(db: GiphyDatabase) = db.gifsDao()
+    fun provideGifDao(db: GiphyDatabase) = db.gifDao()
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeysDao(db: GiphyDatabase) = db.remoteKeysDao()
 }

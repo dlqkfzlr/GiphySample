@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="m.woong.giphysample.data.source.local.entity.Gif" />
+        <variable
+            name="listener"
+            type="m.woong.giphysample.ui.trending.FavoriteToggleListener" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:imageUrl="@{item}"
+            tools:background="@tools:sample/avatars" />
+        <ToggleButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="6dp"
+            android:background="@drawable/selector_favorite"
+            android:text="@null"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:onClick="@{() -> listener.onToggleFavorite(item)}"
+            bind:favorite="@{item.favorite}"/>
+    </FrameLayout>
+</layout>

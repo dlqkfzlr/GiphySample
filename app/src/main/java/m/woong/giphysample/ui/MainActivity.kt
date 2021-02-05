@@ -7,8 +7,10 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import m.woong.giphysample.R
+import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.MainActivityBinding
 import m.woong.giphysample.ui.favorites.FavoritesFragment
+import m.woong.giphysample.ui.trending.FavoriteToggleListener
 import m.woong.giphysample.ui.trending.TrendingFragment
 
 @AndroidEntryPoint
@@ -32,12 +34,12 @@ class MainActivity : AppCompatActivity() {
             this, R.layout.main_activity
         )
         setTabLayout()
+        Log.d(TAG, "DB경로:${getDatabasePath("giphy.db")}")
     }
 
     private fun setTabLayout(){
         tabSelectedListener = object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("TAB", "position: ${tab?.position}")
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, if (tab?.position == 0) tFragment else fFragment)
                     .commitNow()
@@ -51,12 +53,15 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        Log.d("TAB", "tabLayout에 리스너 등록")
         binding.tabLayout.addOnTabSelectedListener(tabSelectedListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.tabLayout.removeOnTabSelectedListener(tabSelectedListener)
+    }
+
+    companion object{
+        val TAG = MainActivity::class.java.simpleName
     }
 }

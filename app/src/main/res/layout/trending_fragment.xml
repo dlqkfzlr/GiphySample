@@ -6,14 +6,13 @@
 
     <data>
 
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+        android:id="@+id/root_trending"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_200"
+        android:background="@color/black"
         tools:context=".ui.trending.TrendingFragment">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -25,8 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:gridLayoutManager="@{2}"
-            tools:listitem="@layout/trending_view_item"
-            tools:itemCount="9" />
+            tools:itemCount="9"
+            tools:listitem="@layout/gif_rv_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
