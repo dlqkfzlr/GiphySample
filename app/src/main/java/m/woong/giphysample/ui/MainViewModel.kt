@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
         return newResponse
     }
 
-    fun fetchTrendingGif() = repository.getTrendingGifStream()
+    private fun fetchTrendingGif() = repository.getTrendingGifStream()
             .flowOn(Dispatchers.IO)
             .cachedIn(viewModelScope)
 
