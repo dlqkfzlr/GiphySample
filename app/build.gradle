@@ -25,16 +25,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 }
 
@@ -75,16 +82,17 @@ dependencies {
     // Local Unit tests
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrest_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "androidx.test:core:$core_test_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "androidx.arch.core:core-testing:$arch_testing_version"
 
-    // Android Instrumented Unit tests
-    androidTestImplementation "junit:junit:$junit_version"
-    androidTestImplementation "org.mockito:mockito-core:$mockito_version"
-    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMaker_version"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-
-    // AndroidX Test - Instrumented testing
-    androidTestImplementation "androidx.test.ext:junit:$junit_version"
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_version"
+    androidTestImplementation "androidx.test:rules:$androidx_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
 
 }
