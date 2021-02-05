@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
             this, R.layout.main_activity
         )
         setTabLayout()
-        Log.d(TAG, "DB경로:${getDatabasePath("giphy.db")}")
     }
 
     private fun setTabLayout(){
