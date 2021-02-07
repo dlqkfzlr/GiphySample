@@ -18,5 +18,6 @@ interface GiphyService {
     companion object {
         const val API_KEY = "CAvlc5ArNMyF9U0dbm1XJ64TFS6DMsUB"
         const val SUB_PATH_TREND = "trending"
+        const val TRENDING_STARTING_PAGE_INDEX = 0
     }
 }

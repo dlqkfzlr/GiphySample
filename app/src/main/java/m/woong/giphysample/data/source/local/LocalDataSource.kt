@@ -1,11 +1,8 @@
 package m.woong.giphysample.data.source.local
 
-import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
-import kotlinx.coroutines.flow.Flow
 import m.woong.giphysample.data.source.local.entity.Gif
-import m.woong.giphysample.data.source.local.entity.RemoteKeys
+import m.woong.giphysample.data.source.local.entity.RemoteKey
 
 interface LocalDataSource {
 
@@ -17,7 +14,7 @@ interface LocalDataSource {
     suspend fun clearGifs()
 
     /* RemoteKeysDao */
-    suspend fun saveRemoteKeys(remoteKey: List<RemoteKeys>)
-    suspend fun getRemoteKeysWithId(gifId: String): RemoteKeys?
+    suspend fun saveRemoteKeys(remoteKeys: List<RemoteKey>)
+    suspend fun getRemoteKeyWithGifId(gifId: String): RemoteKey?
     suspend fun clearRemoteKeys()
 }

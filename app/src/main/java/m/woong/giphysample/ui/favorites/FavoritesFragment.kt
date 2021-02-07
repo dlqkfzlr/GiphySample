@@ -1,7 +1,6 @@
 package m.woong.giphysample.ui.favorites
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,18 +15,13 @@ import kotlinx.coroutines.launch
 import m.woong.giphysample.R
 import m.woong.giphysample.databinding.FavoritesFragmentBinding
 import m.woong.giphysample.ui.MainViewModel
+import m.woong.giphysample.ui.adapter.FavoriteGifAdapter
+import m.woong.giphysample.utils.setGridLayoutManager
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FavoritesFragment()
-        val TAG = FavoritesFragment::class.java.simpleName
-    }
-
     private val viewModel: MainViewModel by activityViewModels()
-    /*private var _binding: FavoritesFragmentBinding? = null
-    private val binding get() = _binding!!*/
     private lateinit var binding: FavoritesFragmentBinding
     private lateinit var fAdapter: FavoriteGifAdapter
     private var favoriteJob: Job? = null
@@ -36,8 +30,6 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "onCreateView")
-//        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
         binding = DataBindingUtil.inflate(inflater, R.layout.favorites_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -45,7 +37,6 @@ class FavoritesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d(TAG, "onActivityCreated")
         initAdapter()
         initFavorite()
     }
@@ -53,13 +44,13 @@ class FavoritesFragment : Fragment() {
     private fun initAdapter() {
         fAdapter = FavoriteGifAdapter()
         binding.rvFavorites.adapter = fAdapter
-        /*binding.rvFavorites.apply {
+        binding.rvFavorites.apply {
             setGridLayoutManager(2)
             this.adapter = fAdapter
-        }*/
+        }
     }
 
-    private fun initFavorite(){
+    private fun initFavorite() {
         favoriteJob?.cancel()
         favoriteJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getFavoriteGif().collectLatest {
@@ -68,10 +59,7 @@ class FavoritesFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d(TAG, "onDestroyView")
-//        _binding = null
+    companion object {
+        fun newInstance() = FavoritesFragment()
     }
-
 }

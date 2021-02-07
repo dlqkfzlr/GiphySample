@@ -1,6 +1,6 @@
 package m.woong.giphysample.data.source.remote.model
 import com.google.gson.annotations.SerializedName
-
+import m.woong.giphysample.data.source.local.entity.Gif
 
 data class RemoteTrendingGiphyResponse(
     @SerializedName("data")

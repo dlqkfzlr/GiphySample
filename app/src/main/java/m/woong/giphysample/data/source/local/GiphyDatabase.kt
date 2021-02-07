@@ -7,11 +7,11 @@ import androidx.room.RoomDatabase
 import m.woong.giphysample.data.source.local.dao.GifDao
 import m.woong.giphysample.data.source.local.dao.RemoteKeysDao
 import m.woong.giphysample.data.source.local.entity.Gif
-import m.woong.giphysample.data.source.local.entity.RemoteKeys
+import m.woong.giphysample.data.source.local.entity.RemoteKey
 
 
 @Database(
-    entities = [Gif::class, RemoteKeys::class],
+    entities = [Gif::class, RemoteKey::class],
     version = 2,
     exportSchema = false
 )

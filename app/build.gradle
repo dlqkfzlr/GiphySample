@@ -15,7 +15,6 @@ android {
         targetSdkVersion rootProject.target_sdk_version
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,6 +32,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {
@@ -55,11 +55,12 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$recycler_version"
 
     // Retrofit and GSON
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
+
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -79,8 +80,24 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    // Local Unit tests
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation "androidx.test:core:$atsl_version"
+    androidTestImplementation "androidx.test:runner:$atsl_version"
+    androidTestImplementation "androidx.test:rules:$atsl_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$arch_core_version"
+
+    androidTestImplementation "junit:junit:$junit_version"
+    androidTestImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
+    androidTestImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+
     testImplementation "junit:junit:$junit_version"
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    // Local Unit tests
+    /*testImplementation "junit:junit:$junit_version"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrest_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-inline:$mockito_version"
@@ -93,6 +110,6 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$androidx_test_version"
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"*/
 
 }

@@ -14,7 +14,6 @@ import m.woong.giphysample.data.repo.GiphyRepository
 import m.woong.giphysample.data.source.local.entity.Gif
 import javax.inject.Inject
 
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: GiphyRepository
@@ -26,21 +25,19 @@ class MainViewModel @Inject constructor(
     fun getTrendingGif(): Flow<PagingData<Gif>> {
         val lastResponse = currentTrendingGif
         if (lastResponse != null) return lastResponse
-        Log.d("GIPHY", "MainViewModel] repository.getTrendingGifStream() 호출")
         val newResponse = fetchTrendingGif()
         currentTrendingGif = newResponse
         return newResponse
     }
 
     private fun fetchTrendingGif() = repository.getTrendingGifStream()
-            .flowOn(Dispatchers.IO)
-            .cachedIn(viewModelScope)
+        .flowOn(Dispatchers.IO)
+        .cachedIn(viewModelScope)
 
     fun saveFavoriteGif(gif: Gif) {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.updateFavoriteGif(gif) == 1){
                 Log.d(TAG, "UPDATE SUCCESS")
-                // TODO: ITEM도 바꿔줄것
             } else {
                 Log.d(TAG, "UPDATE FAILURE")
             }

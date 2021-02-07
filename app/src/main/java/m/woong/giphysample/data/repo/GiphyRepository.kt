@@ -17,7 +17,7 @@ interface GiphyRepository {
     suspend fun clearGifs()
 
     /* RemoteKeysDao */
-    suspend fun saveRemoteKey(remoteKey: RemoteKey)
-//    suspend fun getRemoteKeysWithId(gifId: String): RemoteKey
+    suspend fun saveRemoteKeys(remoteKeys: List<RemoteKey>)
+    suspend fun getRemoteKeyWithGifId(gifId: String): RemoteKey?
     suspend fun clearRemoteKeys()
 }

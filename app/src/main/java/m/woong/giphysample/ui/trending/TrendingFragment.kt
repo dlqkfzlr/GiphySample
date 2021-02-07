@@ -1,7 +1,6 @@
 package m.woong.giphysample.ui.trending
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,30 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import m.woong.giphysample.R
 import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.TrendingFragmentBinding
 import m.woong.giphysample.ui.MainViewModel
 import m.woong.giphysample.ui.adapter.GifLoadStateAdapter
-import m.woong.giphysample.ui.adapter.TrendingGifToggleListener
 import m.woong.giphysample.ui.adapter.TrendingGifAdapter
+import m.woong.giphysample.ui.adapter.TrendingGifToggleListener
 
 @OptIn(ExperimentalPagingApi::class)
 @AndroidEntryPoint
 class TrendingFragment : Fragment(), TrendingGifToggleListener {
 
-    companion object {
-        fun newInstance() = TrendingFragment()
-        val TAG = TrendingFragment::class.java.simpleName
-    }
 
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: TrendingFragmentBinding
@@ -56,7 +47,6 @@ class TrendingFragment : Fragment(), TrendingGifToggleListener {
         super.onActivityCreated(savedInstanceState)
         initAdapter()
         initTrending()
-        initSwipeToRefresh()
     }
 
     override fun onDestroyView() {
@@ -66,32 +56,27 @@ class TrendingFragment : Fragment(), TrendingGifToggleListener {
 
     private fun initAdapter() {
         adapter = TrendingGifAdapter(listener)
-        binding.rvTrending.adapter = adapter.withLoadStateFooter(
+        binding.rvTrending.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = GifLoadStateAdapter(adapter::retry),
             footer = GifLoadStateAdapter(adapter::retry)
         )
     }
 
-    private fun initSwipeToRefresh() {
-//        binding.srTrending.setOnRefreshListener { adapter.refresh() }
-    }
-
-    private fun initTrending(){
+    private fun initTrending() {
         trendingJob?.cancel()
         trendingJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getTrendingGif().collectLatest {
                 adapter.submitData(it)
             }
         }
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            adapter.loadStateFlow
-                .distinctUntilChangedBy { it.refresh }
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.rvTrending.scrollToPosition(0) }
-        }*/
     }
 
     override fun onToggleFavorite(gif: Gif) {
         gif.isFavorite = !gif.isFavorite
         viewModel.saveFavoriteGif(gif)
+    }
+
+    companion object {
+        fun newInstance() = TrendingFragment()
     }
 }

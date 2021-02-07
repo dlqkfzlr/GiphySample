@@ -13,12 +13,12 @@ import m.woong.giphysample.data.source.local.entity.RemoteKey
 import m.woong.giphysample.data.source.remote.RemoteDataSource
 import javax.inject.Inject
 
+@OptIn(ExperimentalPagingApi::class)
 class GiphyRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : BaseRepository(), GiphyRepository {
 
-    /*@OptIn(ExperimentalPagingApi::class)
     override fun getTrendingGifStream(): Flow<PagingData<Gif>> {
         val pagingSourceFactory = { localDataSource.getGifsTrending() }
         return Pager(
@@ -26,14 +26,15 @@ class GiphyRepositoryImpl @Inject constructor(
             remoteMediator = GifRemoteMediator(remoteDataSource, localDataSource),
             pagingSourceFactory = pagingSourceFactory
         ).flow
-    }*/
-    @OptIn(ExperimentalPagingApi::class)
+    }
+
+    /* In-memory Cache
     override fun getTrendingGifStream(): Flow<PagingData<Gif>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = { TrendingPagingSource(remoteDataSource = remoteDataSource) }
         ).flow
-    }
+    }*/
 
     override fun getFavoriteGif(): Flow<PagingData<Gif>> {
         val pagingSourceFactory = { localDataSource.getFavoriteGifs() }
@@ -55,19 +56,19 @@ class GiphyRepositoryImpl @Inject constructor(
         localDataSource.clearGifs()
     }
 
-    override suspend fun saveRemoteKey(remoteKey: RemoteKey) {
-        localDataSource.saveRemoteKey(remoteKey)
+    override suspend fun saveRemoteKeys(remoteKeys: List<RemoteKey>) {
+        localDataSource.saveRemoteKeys(remoteKeys)
     }
 
-    /*override suspend fun getRemoteKeysWithId(gifId: String): RemoteKey {
-        return localDataSource.getRemoteKeysWithId(gifId)
-    }*/
+    override suspend fun getRemoteKeyWithGifId(gifId: String): RemoteKey? {
+        return localDataSource.getRemoteKeyWithGifId(gifId)
+    }
 
     override suspend fun clearRemoteKeys() {
         localDataSource.clearRemoteKeys()
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 2
+        private const val NETWORK_PAGE_SIZE = 15
     }
 }

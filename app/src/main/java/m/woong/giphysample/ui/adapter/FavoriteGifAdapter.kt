@@ -1,7 +1,8 @@
-package m.woong.giphysample.ui.favorites
+package m.woong.giphysample.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -9,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import m.woong.giphysample.R
 import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.GifRvItemBinding
-import m.woong.giphysample.ui.trending.TrendingGifAdapter
 
-class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteViewHolder>(DIFF_CALLBACK) {
+class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteViewHolder>(
+    DIFF_CALLBACK
+) {
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         getItem(position)?.let {
@@ -34,6 +36,7 @@ class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteVie
         fun onBind(gif: Gif) {
             with(binding){
                 item = gif
+                tbItem.isGone = true
                 executePendingBindings()
             }
         }

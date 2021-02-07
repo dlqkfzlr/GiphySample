@@ -11,11 +11,18 @@ import m.woong.giphysample.R
 import m.woong.giphysample.data.source.local.entity.Gif
 
 /* ImageView */
+@BindingAdapter("layoutWidth", "layoutHeight")
+fun ImageView.setLayoutHeight(width: Int, height: Int){
+    this.layoutParams.apply {
+        this.width = width * 3
+        this.height = height * 3
+    }
+}
+
 @BindingAdapter("imageUrl")
 fun ImageView.setUrl(gif: Gif) {
     Glide.with(this)
         .load(gif.url)
-        .fitCenter()
         .error(R.drawable.ic_baseline_error_24)
         .into(this)
 }
