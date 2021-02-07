@@ -1,9 +1,8 @@
 package m.woong.giphysample.data.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import m.woong.giphysample.data.repo.GiphyRepository
-import m.woong.giphysample.data.source.local.LocalDataSource
 import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.data.source.local.entity.mapToGif
 import m.woong.giphysample.data.source.remote.RemoteDataSource
@@ -12,23 +11,22 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-const val TRENDING_STARTING_PAGE_INDEX = 1
+const val TRENDING_STARTING_PAGE_INDEX = 0
 
-@Deprecated("Replaced with RemoteMediator")
 class TrendingPagingSource @Inject constructor(
-private val remoteDataSource: RemoteDataSource
-    ): PagingSource<Int, Gif>() {
+    private val remoteDataSource: RemoteDataSource
+) : PagingSource<Int, Gif>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Gif> {
         val position = params.key ?: TRENDING_STARTING_PAGE_INDEX
         return try {
-            val response = remoteDataSource.getTrendingGiphy(position, params.loadSize)
-            val gifDatas = response.mapToGif()
-            /*val gifDatas = repository.getFavoriteGifs(position, params.loadSize)*/
+            val response = remoteDataSource.getTrendingGiphy(itemsPerPage = params.loadSize, page = position)
+            Log.d("LOAD_GIF","position:$position, params.loadSize:${params.loadSize}")
+            val gifs = response.mapToGif()
             LoadResult.Page(
-                data = gifDatas,
+                data = gifs,
                 prevKey = if (position == TRENDING_STARTING_PAGE_INDEX) null else position - 1,
-                nextKey = if (gifDatas.isEmpty()) null else position + 1
+                nextKey = if (gifs.isEmpty()) null else position + params.loadSize
             )
         } catch (e: IOException) {
             return LoadResult.Error(e)
