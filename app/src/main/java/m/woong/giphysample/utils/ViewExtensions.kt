@@ -13,14 +13,6 @@ import m.woong.giphysample.data.source.local.entity.Gif
 /* ImageView */
 @BindingAdapter("imageUrl")
 fun ImageView.setUrl(gif: Gif) {
-    /*val x = gif.width.toFloat()
-    val y = gif.height.toFloat()
-    val ratio: Float = (x / y)
-    Log.d(
-        "ImageView", "x:$x, y:$y, ratio:$ratio \n " +
-                "iv.width:${this.width}, iv.height:${this.height}"
-    )*/
-
     Glide.with(this)
         .load(gif.url)
         .fitCenter()

@@ -10,7 +10,7 @@
             type="m.woong.giphysample.data.source.local.entity.Gif" />
         <variable
             name="listener"
-            type="m.woong.giphysample.ui.trending.FavoriteToggleListener" />
+            type="m.woong.giphysample.ui.adapter.TrendingGifToggleListener" />
     </data>
 
     <FrameLayout
@@ -19,12 +19,15 @@
         android:layout_margin="4dp">
 
         <ImageView
+            android:id="@+id/iv_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             bind:imageUrl="@{item}"
             tools:background="@tools:sample/avatars" />
+
         <ToggleButton
+            android:id="@+id/tb_item"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="bottom|end"
@@ -35,5 +38,6 @@
             android:textOff="@null"
             android:onClick="@{() -> listener.onToggleFavorite(item)}"
             bind:favorite="@{item.favorite}"/>
+
     </FrameLayout>
 </layout>

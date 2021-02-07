@@ -6,18 +6,19 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import m.woong.giphysample.data.paging.GifRemoteMediator
+import m.woong.giphysample.data.paging.TrendingPagingSource
 import m.woong.giphysample.data.source.local.LocalDataSource
 import m.woong.giphysample.data.source.local.entity.Gif
-import m.woong.giphysample.data.source.local.entity.RemoteKeys
+import m.woong.giphysample.data.source.local.entity.RemoteKey
 import m.woong.giphysample.data.source.remote.RemoteDataSource
 import javax.inject.Inject
 
-@OptIn(ExperimentalPagingApi::class)
 class GiphyRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : BaseRepository(), GiphyRepository {
 
+    /*@OptIn(ExperimentalPagingApi::class)
     override fun getTrendingGifStream(): Flow<PagingData<Gif>> {
         val pagingSourceFactory = { localDataSource.getGifsTrending() }
         return Pager(
@@ -25,8 +26,14 @@ class GiphyRepositoryImpl @Inject constructor(
             remoteMediator = GifRemoteMediator(remoteDataSource, localDataSource),
             pagingSourceFactory = pagingSourceFactory
         ).flow
+    }*/
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getTrendingGifStream(): Flow<PagingData<Gif>> {
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = { TrendingPagingSource(remoteDataSource = remoteDataSource) }
+        ).flow
     }
-
 
     override fun getFavoriteGif(): Flow<PagingData<Gif>> {
         val pagingSourceFactory = { localDataSource.getFavoriteGifs() }
@@ -48,19 +55,19 @@ class GiphyRepositoryImpl @Inject constructor(
         localDataSource.clearGifs()
     }
 
-    override suspend fun saveRemoteKeys(remoteKey: List<RemoteKeys>) {
-        localDataSource.saveRemoteKeys(remoteKey)
+    override suspend fun saveRemoteKey(remoteKey: RemoteKey) {
+        localDataSource.saveRemoteKey(remoteKey)
     }
 
-    override suspend fun getRemoteKeysWithId(gifId: String): RemoteKeys? {
+    /*override suspend fun getRemoteKeysWithId(gifId: String): RemoteKey {
         return localDataSource.getRemoteKeysWithId(gifId)
-    }
+    }*/
 
     override suspend fun clearRemoteKeys() {
         localDataSource.clearRemoteKeys()
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 15
+        private const val NETWORK_PAGE_SIZE = 2
     }
 }

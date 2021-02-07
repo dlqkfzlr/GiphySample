@@ -15,10 +15,29 @@
         android:background="@color/black"
         tools:context=".ui.trending.TrendingFragment">
 
+        <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/sr_trending"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trending"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="9"
+                tools:listitem="@layout/gif_rv_item" />
+            &lt;!&ndash;bind:gridLayoutManager="@{2}"&ndash;&gt;
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trending"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +45,5 @@
             bind:gridLayoutManager="@{2}"
             tools:itemCount="9"
             tools:listitem="@layout/gif_rv_item" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package m.woong.giphysample.ui.trending
+package m.woong.giphysample.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.GifRvItemBinding
 
 class TrendingGifAdapter(
-    private val mListener: FavoriteToggleListener
+    private val mListener: TrendingGifToggleListener
 ): PagingDataAdapter<Gif, TrendingGifAdapter.TrendingViewHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
@@ -50,8 +50,4 @@ class TrendingGifAdapter(
                 oldItem == newItem
         }
     }
-}
-
-interface FavoriteToggleListener {
-    fun onToggleFavorite(gif: Gif)
 }

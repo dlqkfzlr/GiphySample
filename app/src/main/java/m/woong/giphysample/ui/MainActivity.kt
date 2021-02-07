@@ -1,16 +1,13 @@
 package m.woong.giphysample.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import m.woong.giphysample.R
-import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.MainActivityBinding
 import m.woong.giphysample.ui.favorites.FavoritesFragment
-import m.woong.giphysample.ui.trending.FavoriteToggleListener
 import m.woong.giphysample.ui.trending.TrendingFragment
 
 @AndroidEntryPoint
