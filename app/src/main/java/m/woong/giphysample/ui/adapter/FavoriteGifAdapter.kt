@@ -11,7 +11,9 @@ import m.woong.giphysample.R
 import m.woong.giphysample.data.source.local.entity.Gif
 import m.woong.giphysample.databinding.GifRvItemBinding
 
-class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteViewHolder>(
+class FavoriteGifAdapter(
+    private val toggleListener: TrendingGifToggleListener        // mListener는 JAVA의 컨벤션일뿐
+) : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -36,7 +38,8 @@ class FavoriteGifAdapter : PagingDataAdapter<Gif, FavoriteGifAdapter.FavoriteVie
         fun onBind(gif: Gif) {
             with(binding){
                 item = gif
-                tbItem.isGone = true
+                listener = toggleListener
+//                tbItem.isGone = true
                 executePendingBindings()
             }
         }

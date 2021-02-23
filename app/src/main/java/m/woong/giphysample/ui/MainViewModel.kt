@@ -1,6 +1,8 @@
 package m.woong.giphysample.ui
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import m.woong.giphysample.data.repo.GiphyRepository
 import m.woong.giphysample.data.source.local.entity.Gif
+import m.woong.giphysample.utils.Event
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +24,10 @@ class MainViewModel @Inject constructor(
 
     private var currentTrendingGif: Flow<PagingData<Gif>>? = null
     private var currentFavoriteGif: Flow<PagingData<Gif>>? = null
+
+    private var _update = MutableLiveData<Event<Boolean>>()
+    val update: LiveData<Event<Boolean>>
+    get() = _update
 
     fun getTrendingGif(): Flow<PagingData<Gif>> {
         val lastResponse = currentTrendingGif
@@ -38,6 +45,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.updateFavoriteGif(gif) == 1){
                 Log.d(TAG, "UPDATE SUCCESS")
+                _update.postValue(Event(true))
             } else {
                 Log.d(TAG, "UPDATE FAILURE")
             }
