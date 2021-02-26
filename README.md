@@ -4,13 +4,15 @@ Sample Android App based on Giphy API
 
 ## Architecture
 - MVVM
+
+## Async
+- Coroutine
                                  
 ## Library                      
 - DataBinding
-- Hilt
 - Glide
+- Hilt
 - LiveData
-- Room
-- ViewModel
-- Coroutine
 - Paging3
+- Retrofit2
+- Room
