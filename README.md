@@ -1,6 +1,6 @@
 # GiphySample
-Sample project for Giphy Api 
-This project is designed by MVVM pattern and composed with various AAC.
+Sample Android App based on Giphy API
+<br>This project is designed by MVVM pattern and composed with various AAC.
 
 ## Architecture
 - MVVM
